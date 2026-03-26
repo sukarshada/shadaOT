@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لغز المدينة القديمة | إعداد شدا عابد</title>
+  <style>
+    :root{
+      --bg1:#0f172a;
+      --bg2:#1e293b;
+      --card:#ffffff;
+      --accent:#f59e0b;
+      --accent2:#38bdf8;
+      --good:#16a34a;
+      --bad:#dc2626;
+      --text:#10223a;
+      --soft:#eef6ff;
+      --purple:#7c3aed;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Tahoma","Arial","Noto Sans Arabic",sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(56,189,248,.28), transparent 22%),
+        radial-gradient(circle at top left, rgba(245,158,11,.18), transparent 20%),
+        linear-gradient(135deg,var(--bg1),var(--bg2));
+      min-height:100vh;
+      color:#fff;
+    }
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:20px;
+    }
+    .hero{
+      background:linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
+      border:1px solid rgba(255,255,255,.15);
+      backdrop-filter: blur(6px);
+      border-radius:28px;
+      padding:24px;
+      box-shadow:0 20px 40px rgba(0,0,0,.22);
+      overflow:hidden;
+      position:relative;
+    }
+    .hero:before{
+      content:"";
+      position:absolute;
+      width:220px;height:220px;
+      background:radial-gradient(circle, rgba(245,158,11,.22), transparent 70%);
+      left:-70px; top:-70px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:clamp(28px,4vw,46px);
+      line-height:1.2;
+    }
+    .subtitle{
+      font-size:1.12rem;
+      line-height:1.9;
+      max-width:800px;
+      color:#ecf8ff;
+      margin:0 0 18px;
+    }
+    .credit{
+      display:inline-block;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.15);
+      padding:10px 16px;
+      border-radius:999px;
+      font-weight:700;
+      margin-top:4px;
+    }
+    .top-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:14px;
+    }
+    .pill{
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:20px;
+      padding:14px;
+      text-align:center;
+    }
+    .pill strong{display:block;font-size:1.3rem;margin-bottom:6px}
+    .game{
+      margin-top:22px;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:18px;
+    }
+    @media (max-width:900px){
+      .game{grid-template-columns:1fr}
+    }
+    .panel{
+      background:var(--card);
+      color:var(--text);
+      border-radius:26px;
+      padding:22px;
+      box-shadow:0 18px 40px rgba(0,0,0,.18);
+    }
+    .story-box{
+      min-height:260px;
+      background:linear-gradient(180deg,#ffffff,#f7fbff);
+      border:2px solid #ddeefe;
+      border-radius:24px;
+      padding:20px;
+      position:relative;
+      overflow:hidden;
+    }
+    .scene-tag{
+      display:inline-block;
+      background:#e8f4ff;
+      color:#075985;
+      font-weight:700;
+      padding:8px 14px;
+      border-radius:999px;
+      margin-bottom:12px;
+    }
+    .story-title{
+      font-size:1.7rem;
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+    .story-text{
+      font-size:1.15rem;
+      line-height:2;
+      margin:0;
+    }
+    .choices{
+      margin-top:18px;
+      display:grid;
+      gap:12px;
+    }
+    button.choice,
+    button.control{
+      border:none;
+      cursor:pointer;
+      border-radius:18px;
+      padding:16px 18px;
+      font-size:1rem;
+      font-weight:700;
+      line-height:1.7;
+      transition:.2s transform,.2s box-shadow,.2s background;
+    }
+    button.choice{
+      text-align:right;
+      background:#eff6ff;
+      color:#0f172a;
+      border:2px solid #d6e8ff;
+      box-shadow:0 8px 18px rgba(2,132,199,.08);
+    }
+    button.choice:hover{transform:translateY(-2px); background:#e0f2fe}
+    button.control{
+      background:linear-gradient(135deg,var(--accent),#fb7185);
+      color:#fff;
+      box-shadow:0 10px 22px rgba(245,158,11,.28);
+    }
+    button.control.secondary{
+      background:linear-gradient(135deg,var(--accent2),var(--purple));
+      box-shadow:0 10px 22px rgba(56,189,248,.28);
+    }
+    .side-grid{
+      display:grid;
+      gap:18px;
+    }
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:12px;
+    }
+    .stat{
+      background:var(--soft);
+      border-radius:20px;
+      padding:16px;
+      border:2px solid #dcecff;
+    }
+    .stat .label{
+      color:#475569;
+      font-weight:700;
+      font-size:.95rem;
+      margin-bottom:6px;
+    }
+    .stat .value{
+      font-size:1.6rem;
+      font-weight:800;
+      color:#0f172a;
+    }
+    .meter{
+      margin-top:10px;
+      height:10px;
+      background:#dbeafe;
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .meter span{
+      display:block;
+      height:100%;
+      background:linear-gradient(90deg,#22c55e,#0ea5e9);
+      width:0%;
+      transition:.3s width;
+    }
+    .feedback{
+      background:#fff7ed;
+      border:2px solid #ffedd5;
+      border-radius:20px;
+      padding:16px;
+      min-height:120px;
+    }
+    .feedback h3{
+      margin:0 0 10px;
+      color:#9a3412;
+      font-size:1.1rem;
+    }
+    .feedback p{
+      margin:0;
+      line-height:1.95;
+      font-size:1rem;
+      color:#7c2d12;
+    }
+    .inventory{
+      background:#f5f3ff;
+      border:2px solid #ede9fe;
+      border-radius:20px;
+      padding:16px;
+      min-height:120px;
+    }
+    .inventory h3{
+      margin:0 0 10px;
+      color:#5b21b6;
+      font-size:1.08rem;
+    }
+    .clues{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+    .clue{
+      background:#fff;
+      border:2px solid #ddd6fe;
+      color:#4c1d95;
+      border-radius:999px;
+      padding:8px 12px;
+      font-weight:700;
+      font-size:.94rem;
+    }
+    .footer-note{
+      margin-top:18px;
+      text-align:center;
+      color:#dbeafe;
+      font-size:.95rem;
+      line-height:1.8;
+    }
+    .hidden{display:none}
+    .result-good{color:var(--good);font-weight:800}
+    .result-bad{color:var(--bad);font-weight:800}
+    .emoji{
+      font-size:1.6rem;
+      vertical-align:middle;
+      margin-left:6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="hero">
+      <h1>لُغْزُ المَدِينَةِ القَدِيمَةِ</h1>
+      <p class="subtitle">
+        لعبةٌ تفاعليّةٌ باللغة العربيّة الفصحى، داخل قصّةٍ غامضةٍ مليئةٍ بالمواقف الاجتماعيّة المعقّدة.
+        على اللاعب أن يلاحظ، ويفهم مشاعر الآخرين، ويختار التصرّف الأنسب، ويحلّ اللغز خطوةً خطوة.
+      </p>
+      <div class="credit">إعداد: شدا عابد</div>
+
+      <div class="top-grid">
+        <div class="pill"><strong>الهدف</strong>حلّ اللغز باستخدام التفكير الاجتماعي</div>
+        <div class="pill"><strong>المهارات</strong>فهم المواقف، حلّ المشكلات، اتّخاذ القرار</div>
+        <div class="pill"><strong>الأسلوب</strong>مغامرة، غموض، أدلّة، اختيارات</div>
+      </div>
+    </section>
+
+    <section class="game">
+      <div class="panel">
+        <div class="story-box">
+          <div class="scene-tag" id="sceneTag">المشهد 1</div>
+          <h2 class="story-title" id="sceneTitle">مرحباً أيّها المحقّق الذكيّ</h2>
+          <p class="story-text" id="sceneText">
+            في صباحٍ هادئٍ، وصلتَ إلى المكتبة القديمة في المدينة، فوجدتَ الجميعَ قلقين.
+            اختفى مفتاحُ صندوقٍ أثريّ قبل افتتاح المعرض الكبير. لا أحد يعرف ما حدث بالضبط،
+            لكنّ كلَّ شخصٍ رأى جزءاً صغيراً من الحقيقة. مهمّتُك أن تجمع الأدلة من غير أن تُغضِب أحداً،
+            وأن تتصرّف بذكاءٍ واحترامٍ حتى تكتشف اللغز.
+          </p>
+        </div>
+
+        <div class="choices" id="choices"></div>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+          <button class="control secondary hidden" id="nextBtn">التالي</button>
+          <button class="control hidden" id="restartBtn">إعادة اللعب</button>
+        </div>
+      </div>
+
+      <div class="side-grid">
+        <div class="panel">
+          <div class="stats">
+            <div class="stat">
+              <div class="label">النقاط الاجتماعيّة</div>
+              <div class="value" id="scoreValue">0</div>
+              <div class="meter"><span id="scoreBar"></span></div>
+            </div>
+            <div class="stat">
+              <div class="label">عدد الأدلّة</div>
+              <div class="value" id="clueCount">0</div>
+              <div class="meter"><span id="clueBar"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel feedback">
+          <h3>التغذية الراجعة</h3>
+          <p id="feedbackText">
+            اختر سلوكاً مناسباً داخل القصّة. بعد كلّ اختيار ستعرف لماذا كان مفيداً أو غير مفيد.
+          </p>
+        </div>
+
+        <div class="panel inventory">
+          <h3>الأدلّة التي جمعتَها</h3>
+          <div class="clues" id="clueList">
+            <span style="color:#6d28d9;">لا توجد أدلّة بعد.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer-note">
+      صُمِّمت هذه اللعبة لتكون ممتعة وغنيّة بالمواقف الاجتماعيّة المركّبة، مع لغة عربيّة سليمة
+      وقصّةٍ تشجّع التفكير، والانتباه للتفاصيل، واختيار التصرّف الأنسب.
+    </div>
+  </div>
+
+  <script>
+    const scenes = [
+      {
+        tag: "المشهد 1",
+        title: "عند باب المكتبة",
+        text: "وصلتَ إلى المكتبة، فوجدتَ الحارسَ متوتّراً وأمينةَ المكتبة تتكلّم بسرعة، بينما يقف طفلٌ صغيرٌ في الزاوية صامتاً. الجميع يتكلّم في الوقت نفسه. ما أفضل خطوةٍ أولى؟",
+        choices: [
+          {
+            text: "أرفع صوتي وأطلب من الجميع أن يسكتوا فوراً.",
+            score: 0,
+            feedback: "هذا قد يزيد التوتّر. في المواقف المزدحمة، من الأفضل تنظيم الحديث بهدوء بدلاً من السيطرة بالقوّة.",
+            clue: null
+          },
+          {
+            text: "أقول بهدوء: سأتحدّث مع كلّ شخصٍ على حدة، ولنبدأ بالأكثر هدوءاً.",
+            score: 2,
+            feedback: "اختيار ممتاز. لقد خفّفتَ الفوضى، واحترمتَ الجميع، وبدأتَ بطريقة منظّمة تساعد على فهم الحقيقة.",
+            clue: "بدأتَ التحقيق بهدوء"
+          },
+          {
+            text: "أتجاهل الجميع وأبحث وحدي من غير أن أسأل أحداً.",
+            score: 1,
+            feedback: "البحث مهمّ، لكن تجاهل الناس قد يجعلك تخسر معلوماتٍ أساسيّة. أحياناً تكون الكلمات أهمّ من الأشياء.",
+            clue: null
+          }
+        ]
+      },
+      {
+        tag: "المشهد 2",
+        title: "الطفل الصامت",
+        text: "لاحظتَ أنّ الطفلَ الصغيرَ ينظر مراراً إلى الطاولة ثم إلى النافذة، لكنّه لا يتكلّم. يبدو أنّه يعرف شيئاً، إلا أنّه خائف أو مرتبك. ماذا تفعل؟",
+        choices: [
+          {
+            text: "أجلس قريباً منه وأقول: يمكنك أن تشير أو ترسم أو تتكلّم بطريقتك، وأنا سأفهمك.",
+            score: 3,
+            feedback: "رائع. لقد احترمتَ طريقته في التواصل، ووفّرتَ له شعوراً بالأمان من غير ضغط.",
+            clue: "الطفل يشير إلى النافذة"
+          },
+          {
+            text: "أقول له بسرعة: تكلّم الآن، أنت تعرف ما حدث، ولا وقت لدينا.",
+            score: 0,
+            feedback: "هذا أسلوب ضاغط. الشخص القَلِق يحتاج إلى أمانٍ ووقت، لا إلى استعجالٍ يربكه أكثر.",
+            clue: null
+          },
+          {
+            text: "أتركه تماماً لأنّه لم يبدأ بالكلام من نفسه.",
+            score: 0,
+            feedback: "تركه قد يضيّع دليلاً مهمّاً. بعض الأشخاص يحتاجون إلى دعوةٍ لطيفة حتى يشاركوا.",
+            clue: null
+          }
+        ]
+      },
+      {
+        tag: "المشهد 3",
+        title: "خلاف بين شاهدين",
+        text: "قال الحارس: رأيتُ شابّاً قرب الصندوق. وقالت أمينة المكتبة: مستحيل، لقد كان يساعدني في الداخل. بدأ الاثنان يتجادلان، وكلّ واحدٍ يظنّ أنّ الآخر يتّهمه بالكذب. كيف تتصرّف؟",
+        choices: [
+          {
+            text: "أقول لهما: أحدكما يكذب، وسأكتشف مَن هو.",
+            score: 0,
+            feedback: "هذا يزيد الدفاعيّة والخصام. عندما يشعر الناس بالاتّهام، يقلّ تعاونهم.",
+            clue: null
+          },
+          {
+            text: "أوضّح أنّ الذاكرة قد تختلف، وأطلب من كلّ واحدٍ أن يصف الوقت والمكان بالتفصيل.",
+            score: 3,
+            feedback: "ممتاز جدّاً. لقد حوّلتَ النزاع إلى جمع معلومات، وبيّنتَ أنّ الاختلاف لا يعني الكذب دائماً.",
+            clue: "الوقت مهمّ في اللغز"
+          },
+          {
+            text: "أتجاهل الخلاف وأنتقل إلى غرفة أخرى.",
+            score: 1,
+            feedback: "تجنّب المشكلة يوفّر وقتاً أحياناً، لكن هنا كان الخلاف يحمل معلومةً مهمّة عن توقيت الحدث.",
+            clue: null
+          }
+        ]
+      },
+      {
+        tag: "المشهد 4",
+        title: "رسالةٌ غامضة",
+        text: "وجدتَ ورقةً تحت الطاولة كُتِب فيها: «المفتاح ليس مسروقاً، بل مخفيٌّ لأجل مفاجأة». بعض الناس ضحك، وبعضهم غضب، لأنّ المعرض سيفتتح بعد قليل. ما التصرّف الأكثر نضجاً؟",
+        choices: [
+          {
+            text: "أعلن فوراً أنّ الأمر مجرّد مزحة، فلا داعي للانزعاج.",
+            score: 1,
+            feedback: "قد تكون مزحة، لكنّ تجاهل مشاعر القلق ليس مناسباً، خصوصاً عندما يكون الوقت مهمّاً.",
+            clue: "قد لا يكون هناك سارق"
+          },
+          {
+            text: "أقول: حتى لو كانت مزحة، فقد سبّبت ارتباكاً، فلنحدّد مَن كتب الرسالة ولماذا.",
+            score: 3,
+            feedback: "أحسنت. أنت لم تبالغ، ولم تُهمل المشكلة. نظرتَ إلى الأثر الاجتماعي للفعل، لا إلى الورقة فقط.",
+            clue: "الرسالة مقصودة"
+          },
+          {
+            text: "أمزّق الرسالة حتى لا يراها أحد.",
+            score: 0,
+            feedback: "إخفاء الدليل يضرّ التحقيق. قد تكون الورقة مفتاحاً لفهم ما حدث.",
+            clue: null
+          }
+        ]
+      },
+      {
+        tag: "المشهد 5",
+        title: "خلف النافذة",
+        text: "اتبعتَ إشارة الطفل، فنظرتَ قرب النافذة. رأيتَ مقعداً صغيراً وآثارَ غبارٍ على الحافّة، وكأنّ شخصاً صعد ليرى شيئاً في الأعلى. أمينة المكتبة تقول إنّها قصّةٌ سخيفة، لكنّ الحارس يريد إغلاق المكان فوراً. ما أفضل قرار؟",
+        choices: [
+          {
+            text: "أوافق الحارس وأغلق المكان من غير تفسير.",
+            score: 1,
+            feedback: "الحذر مفيد، لكن غياب التفسير قد يخيف الجميع أكثر. الناس يحتاجون إلى وضوح.",
+            clue: "هناك شيء فوق النافذة"
+          },
+          {
+            text: "أشرح للجميع أنّنا وجدنا أثراً جديداً، وسنبحث بهدوء قبل اتخاذ قرارٍ نهائي.",
+            score: 3,
+            feedback: "اختيار رائع. لقد جمعتَ بين الهدوء والشفافيّة، وهذا يزيد الثقة ويقلّل التوتّر.",
+            clue: "الجميع يحتاج إلى شرح"
+          },
+          {
+            text: "أسخر من أمينة المكتبة لأنّها لم تنتبه إلى هذا الأثر.",
+            score: 0,
+            feedback: "السخرية تجرح المشاعر وتُضعف التعاون. الذكاء الاجتماعي لا يحتاج إلى إحراج الآخرين.",
+            clue: null
+          }
+        ]
+      },
+      {
+        tag: "المشهد 6",
+        title: "النهاية والحلّ",
+        text: "بعد جمع الأدلّة، اكتشفتَ أنّ الطفل رأى أحد العمّال يضع المفتاح فوق إطار اللوحة الكبيرة ليجهّز «مفاجأة افتتاح»، لكنّه نسي أن يُخبر أحداً. لم يكن هناك سرقة، بل سوء تنظيمٍ وتواصلٍ ضعيف. والآن أمامك لحظةٌ مهمّة: كيف تُنهي القضيّة؟",
+        choices: [
+          {
+            text: "أوبّخ العامل أمام الجميع وأقول إنّه تسبّب في الفوضى وحده.",
+            score: 0,
+            feedback: "صحيح أنّ الخطأ حدث، لكنّ الإحراج العلني لا يحلّ المشكلة. الأفضل إصلاح الموقف والتعلّم منه.",
+            clue: null
+          },
+          {
+            text: "أوضح الحقيقة بهدوء، وأقترح قاعدةً جديدة: لا تُخفى الأشياء المهمّة من غير إخبار الفريق.",
+            score: 4,
+            feedback: "نهاية ممتازة. لقد حللتَ المشكلة، وحميتَ مشاعر الناس، وحوّلتَ الخطأ إلى درسٍ مفيد للجميع.",
+            clue: "أغلقتَ القضيّة بحكمة"
+          },
+          {
+            text: "آخذ المفتاح وأغادر لأنّ المهمّ هو انتهاء اللغز فقط.",
+            score: 1,
+            feedback: "لقد عرفتَ الحلّ، لكنّك لم تُصلح الجانب الاجتماعي من المشكلة. أحياناً النهاية الجيّدة أهمّ من اكتشاف السرّ نفسه.",
+            clue: null
+          }
+        ]
+      }
+    ];
+
+    let currentScene = 0;
+    let score = 0;
+    let clues = [];
+    let answered = false;
+
+    const sceneTag = document.getElementById("sceneTag");
+    const sceneTitle = document.getElementById("sceneTitle");
+    const sceneText = document.getElementById("sceneText");
+    const choicesDiv = document.getElementById("choices");
+    const feedbackText = document.getElementById("feedbackText");
+    const scoreValue = document.getElementById("scoreValue");
+    const scoreBar = document.getElementById("scoreBar");
+    const clueCount = document.getElementById("clueCount");
+    const clueBar = document.getElementById("clueBar");
+    const clueList = document.getElementById("clueList");
+    const nextBtn = document.getElementById("nextBtn");
+    const restartBtn = document.getElementById("restartBtn");
+
+    function renderScene() {
+      const scene = scenes[currentScene];
+      answered = false;
+      nextBtn.classList.add("hidden");
+      restartBtn.classList.add("hidden");
+
+      sceneTag.textContent = scene.tag;
+      sceneTitle.textContent = scene.title;
+      sceneText.textContent = scene.text;
+      choicesDiv.innerHTML = "";
+
+      scene.choices.forEach((choice, index) => {
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.innerHTML = `${index + 1}) ${choice.text}`;
+        btn.onclick = () => chooseAnswer(choice, btn);
+        choicesDiv.appendChild(btn);
+      });
+
+      feedbackText.innerHTML = "اختر السلوك الذي تراه الأنسب داخل هذا الموقف الاجتماعي.";
+      updateStats();
+      renderClues();
+    }
+
+    function chooseAnswer(choice, buttonEl) {
+      if (answered) return;
+      answered = true;
+
+      score += choice.score;
+      if (choice.clue && !clues.includes(choice.clue)) {
+        clues.push(choice.clue);
+      }
+
+      const allButtons = document.querySelectorAll(".choice");
+      allButtons.forEach(btn => btn.disabled = true);
+
+      if (choice.score >= 3) {
+        buttonEl.style.background = "#dcfce7";
+        buttonEl.style.borderColor = "#86efac";
+        feedbackText.innerHTML = `<span class="result-good">اختيار ذكيّ <span class="emoji">🌟</span></span><br>${choice.feedback}`;
+      } else if (choice.score >= 1) {
+        buttonEl.style.background = "#fef3c7";
+        buttonEl.style.borderColor = "#fcd34d";
+        feedbackText.innerHTML = `<span style="color:#a16207;font-weight:800;">اختيار مقبول جزئيّاً <span class="emoji">🤔</span></span><br>${choice.feedback}`;
+      } else {
+        buttonEl.style.background = "#fee2e2";
+        buttonEl.style.borderColor = "#fca5a5";
+        feedbackText.innerHTML = `<span class="result-bad">هذا الخيار ليس الأفضل <span class="emoji">⚠️</span></span><br>${choice.feedback}`;
+      }
+
+      updateStats();
+      renderClues();
+
+      if (currentScene < scenes.length - 1) {
+        nextBtn.classList.remove("hidden");
+      } else {
+        showEnding();
+      }
+    }
+
+    function updateStats() {
+      scoreValue.textContent = score;
+      clueCount.textContent = clues.length;
+      const scorePercent = Math.min((score / 18) * 100, 100);
+      const cluePercent = Math.min((clues.length / 6) * 100, 100);
+      scoreBar.style.width = scorePercent + "%";
+      clueBar.style.width = cluePercent + "%";
+    }
+
+    function renderClues() {
+      clueList.innerHTML = "";
+      if (clues.length === 0) {
+        clueList.innerHTML = '<span style="color:#6d28d9;">لا توجد أدلّة بعد.</span>';
+        return;
+      }
+      clues.forEach(clue => {
+        const span = document.createElement("span");
+        span.className = "clue";
+        span.textContent = clue;
+        clueList.appendChild(span);
+      });
+    }
+
+    function showEnding() {
+      choicesDiv.innerHTML = "";
+      nextBtn.classList.add("hidden");
+      restartBtn.classList.remove("hidden");
+
+      let finalTitle = "";
+      let finalText = "";
+
+      if (score >= 14) {
+        finalTitle = "محقّق اجتماعي بارع";
+        finalText = "أحسنتَ كثيراً! لقد حللتَ اللغز بذكاء، وفهمتَ مشاعر الشخصيّات، واخترتَ حلولاً هادئة وعادلة. هذا يعني أنّك لم تبحث عن الحقيقة فقط، بل عرفتَ أيضاً كيف تحافظ على التعاون والاحترام.";
+      } else if (score >= 9) {
+        finalTitle = "محقّق جيّد جدّاً";
+        finalText = "لقد وصلتَ إلى الحلّ، واتّخذتَ عدداً من القرارات الجيّدة. بعض المواقف كانت تحتاج إلى دقّةٍ اجتماعيّةٍ أكبر، لكنّك كنت قريباً جدّاً من الأداء الممتاز.";
+      } else {
+        finalTitle = "محقّق يتعلّم";
+        finalText = "لقد أكملتَ القضيّة، وهذا رائع. في المرّة القادمة، حاول أن تنتبه أكثر إلى مشاعر الآخرين، وإلى كيفيّة السؤال والشرح والتعامل مع الخلاف.";
+      }
+
+      sceneTag.textContent = "النهاية";
+      sceneTitle.textContent = finalTitle;
+      sceneText.textContent = finalText + " مجموع نقاطك: " + score + "، وعدد الأدلّة التي جمعتَها: " + clues.length + ".";
+
+      feedbackText.innerHTML = "انتهت المغامرة! يمكنك إعادة اللعب واختيار حلولٍ مختلفة لرؤية نتائجٍ جديدة.";
+      updateStats();
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (currentScene < scenes.length - 1) {
+        currentScene++;
+        renderScene();
+      }
+    });
+
+    restartBtn.addEventListener("click", () => {
+      currentScene = 0;
+      score = 0;
+      clues = [];
+      renderScene();
+    });
+
+    renderScene();
+  </script>
+</body>
+</html>
